@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "358516698133",
+    "project_id": "save-med-data",
+    "storage_bucket": "save-med-data.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358516698133:android:d3cf41f2e05cb08f79321c",
+        "android_client_info": {
+          "package_name": "com.example.flutter_firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "358516698133-qejve2h8s6knf5030699ob38vv5gfig1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGWNmKoIm5X-UPT8aWH9L8oIDXLiXZzdE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "358516698133-qejve2h8s6knf5030699ob38vv5gfig1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
