@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 
 class DatabaseService {
   Future<String?> addData({
@@ -22,11 +23,12 @@ class DatabaseService {
     try {
       CollectionReference users =
           FirebaseFirestore.instance.collection('data_collection');
-      final snapshot = await users.where("uid", isEqualTo: uid).get().then(
+      // final snapshot = 
+      await users.where("uid", isEqualTo: uid).get().then(
         (querySnapshot) {
-          print("Successfully completed");
+          debugPrint("Successfully completed");
           for (var docSnapshot in querySnapshot.docs) {
-            print('${docSnapshot.id} => ${docSnapshot.data()}');
+            debugPrint('${docSnapshot.id} => ${docSnapshot.data()}');
             listMap.add(docSnapshot.data());
           }
         },

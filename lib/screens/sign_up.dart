@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -44,14 +46,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       loading=true;
                     });
                     try {
-                      final newUser = await _auth.createUserWithEmailAndPassword(
+                      // final newUser = 
+                      await _auth.createUserWithEmailAndPassword(
                           email: emailController.text.toString(),
                           password: passwordController.text.toString());
-                      if (newUser != null) {
+                      // if (newUser != null) {
                         Navigator.pushNamed(context, 'home_screen');
-                      }
+                      // }
                     } catch (e) {
-                      print(e);
+                      debugPrint(e.toString());
                     }
                     setState(() {
                       loading=false;
