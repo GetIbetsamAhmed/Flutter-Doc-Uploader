@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -39,23 +41,26 @@ class _HomeScreenState extends State<HomeScreen> {
   bool loading = false;
   Future uploadImageToFirebase(
       BuildContext context, TextEditingController titleController) async {
-        setState(() {
-          loading=true;
-        });
+    setState(() {
+      loading = true;
+    });
     String fileName = _imageFile!.path;
     Reference firebaseStorageRef =
         FirebaseStorage.instance.ref().child('uploads/$fileName');
     UploadTask uploadTask = firebaseStorageRef.putFile(_imageFile!);
     TaskSnapshot taskSnapshot = await uploadTask;
-    taskSnapshot.ref.getDownloadURL().then((value) async =>
-        await DatabaseService().addData(
-            uid: userUID!, title: titleController.text.toString(), url: value));
-    Navigator.popAndPushNamed(context, "home_screen");
+    taskSnapshot.ref.getDownloadURL().then(
+          (value) async => await DatabaseService().addData(
+            uid: userUID!,
+            title: titleController.text.toString(),
+            url: value,
+          ),
+        );
+   Navigator.popAndPushNamed(context, "home_screen");
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -63,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Home'),
+          title: const Text('Home'),
         ),
         body: ModalProgressHUD(
           inAsyncCall: loading,
@@ -93,12 +98,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           ? Image.file(_imageFile!)
                           : Column(
                               children: [
-                                Text("Upload document"),
+                                const Text("Upload document"),
                                 ElevatedButton(
                                   onPressed: pickImage,
                                   child: const Icon(Icons.add_a_photo),
                                 ),
-                                Text("Show all documents"),
+                                const Text("Show all documents"),
                                 ElevatedButton(
                                   onPressed: () {
                                     Navigator.pushNamed(
@@ -138,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final prefs = await SharedPreferences.getInstance();
     const key = 'uid';
     final value = prefs.getString(key) ?? "";
-    print('read: $value');
+    debugPrint('read: $value');
 
     setState(() {
       userUID = value.toString();

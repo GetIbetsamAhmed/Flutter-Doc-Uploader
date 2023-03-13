@@ -22,7 +22,7 @@ class _ShowDataScreenState extends State<ShowDataScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('All Data'),
+          title: const Text('All Data'),
         ),
         body: FutureBuilder(
             builder: (ctx, snapshot) {
@@ -33,7 +33,7 @@ class _ShowDataScreenState extends State<ShowDataScreen> {
                   return Center(
                     child: Text(
                       '${snapshot.error} occurred',
-                      style: TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 18),
                     ),
                   );
 
@@ -41,7 +41,7 @@ class _ShowDataScreenState extends State<ShowDataScreen> {
                 } else if (snapshot.hasData) {
                   // Extracting data from snapshot object
                   List<dynamic> data = snapshot.data;
-                  return Container(
+                  return SizedBox(
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                     child: ListView.builder(
@@ -60,7 +60,7 @@ class _ShowDataScreenState extends State<ShowDataScreen> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  Container(
+                                  SizedBox(
                                     width: MediaQuery.of(context).size.width,
                                     child: Image(
                                       image: NetworkImage(data[index]["url"]),
@@ -91,7 +91,7 @@ class _ShowDataScreenState extends State<ShowDataScreen> {
     final prefs = await SharedPreferences.getInstance();
     const key = 'uid';
     final value = prefs.getString(key) ?? "";
-    print('read: $value');
+    debugPrint('read: $value');
 
     setState(() {
       userUID = value.toString();

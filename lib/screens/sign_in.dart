@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -50,13 +52,13 @@ class _SignInScreenState extends State<SignInScreen> {
                       final newUser = await _auth.signInWithEmailAndPassword(
                           email: emailController.text.toString(),
                           password: passwordController.text.toString());
-                      if (newUser != null) {
-                        print('This is ID of user ${newUser.user!.uid}');
+                      // if (newUser != null) {
+                        debugPrint('This is ID of user ${newUser.user!.uid}');
                         _save(newUser);
                         Navigator.pushNamed(context, 'home_screen');
-                      }
+                      // }
                     } catch (e) {
-                      print(e);
+                      debugPrint(e.toString());
                     }
                     setState(() {
                       loading = false;
@@ -77,6 +79,6 @@ class _SignInScreenState extends State<SignInScreen> {
     const key = 'uid';
     final value = newUser.user!.uid;
     prefs.setString(key, value);
-    print('saved $value');
+    debugPrint('saved $value');
   }
 }
