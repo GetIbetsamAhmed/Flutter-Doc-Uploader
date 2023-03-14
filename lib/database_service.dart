@@ -2,28 +2,35 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 class DatabaseService {
-  Future<String?> addData({
-    required String? uid,
-    required String? title,
-    required String? url,
-  }) async {
+  Future<String?> addData(
+      {required String? uid,
+      required String? title,
+      required String? url,
+      required String? dateTime}) async {
     try {
-      CollectionReference users =
-          FirebaseFirestore.instance.collection('data_collection');
+      CollectionReference data =
+          FirebaseFirestore.instance.collection('data');
       // Call the user's CollectionReference to add a new user
-      await users.add({'uid': uid, 'title': title, 'url': url});
+      await data.add(
+        {
+          'uid': uid,
+          'title': title,
+          'url': url,
+          'dateTime': dateTime
+        },
+      );
       return 'success';
     } catch (e) {
       return 'Error adding data';
     }
   }
 
-  Future<dynamic> getUser(String uid) async {
+  Future<dynamic> getUser(String? uid) async {
     List<dynamic> listMap = [];
     try {
       CollectionReference users =
-          FirebaseFirestore.instance.collection('data_collection');
-      // final snapshot = 
+          FirebaseFirestore.instance.collection('data');
+      // final snapshot =
       await users.where("uid", isEqualTo: uid).get().then(
         (querySnapshot) {
           debugPrint("Successfully completed");

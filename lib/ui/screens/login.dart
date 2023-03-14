@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/ui/components/custom_button.dart';
 import 'package:flutter_firebase/ui/components/custom_dialog.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_firebase/ui/components/remember_me.dart';
 import 'package:flutter_firebase/ui/responsiveness/screen_size.dart';
 import 'package:flutter_firebase/ui/shared/colors.dart';
 import 'package:flutter_firebase/ui/shared/global_padding.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,12 +18,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _auth = FirebaseAuth.instance;
   TextEditingController? _emailController, _passwordController;
   bool showPassword = false;
   @override
   void initState() {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+
     super.initState();
   }
 
@@ -120,18 +124,30 @@ class _LoginScreenState extends State<LoginScreen> {
         child: CustomButton(
           color: blue,
           width: MediaQuery.of(context).size.width,
-          onTap: () {
-            showDialog(
-              context: context,
-              builder: (context) => CustomPopUp(
-                onButtonTap: () {
-                  Navigator.pushReplacementNamed(context, 'home');
-                },
-                buttonText: "Goto Home",
-                text: "Logged in Successful!",
-                title: "Congratulations",
-              ),
-            );
+          onTap: () async {
+            try {
+              final newUser = await _auth.signInWithEmailAndPassword(
+                  email: _emailController!.text.toString(),
+                  password: _passwordController!.text.toString());
+              if (newUser != null) {
+                // debugPrint('This is ID of user ${newUser.user!.uid}');
+                _save(newUser);
+                showDialog(
+                  context: context,
+                  builder: (context) => CustomPopUp(
+                    onButtonTap: () {
+                      Navigator.pushReplacementNamed(context, 'home');
+                    },
+                    buttonText: "Goto Home",
+                    text: "Logged in Successful!",
+                    title: "Congratulations",
+                  ),
+                );
+                // Navigator.pushNamed(context, 'home_screen');
+              }
+            } catch (e) {
+              debugPrint(e.toString());
+            }
           },
           child: const Text(
             "Sign In",
@@ -143,5 +159,13 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  _save(UserCredential newUser) async {
+    final prefs = await SharedPreferences.getInstance();
+    const key = 'uid';
+    final value = newUser.user!.uid;
+    prefs.setString(key, value);
+    debugPrint('saved $value');
   }
 }

@@ -23,9 +23,17 @@ class _SplashScreenState extends State<SplashScreen> {
   _navigate() async {
     final pref = await SharedPreferences.getInstance();
     if (pref.getBool("on_boarded") == null) {
-      _navigateToOnBoarding();
+      if (pref.getString("uid") == null) {
+        _navigateToOnBoarding();
+      } else if (pref.getString('uid') != null) {
+        _navigateToHome();
+      }
     } else if (pref.getBool("on_boarded")!) {
-      _navigateToLogin();
+      if (pref.getString("uid") == null) {
+        _navigateToLogin();
+      } else if (pref.getString('uid') != null) {
+        _navigateToHome();
+      }
     }
   }
 
@@ -35,6 +43,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _navigateToLogin() {
     Navigator.pushReplacementNamed(context, 'login');
+  }
+
+  _navigateToHome() {
+    Navigator.pushReplacementNamed(context, 'home');
   }
 
   @override

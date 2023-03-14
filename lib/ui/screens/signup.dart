@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/ui/components/custom_button.dart';
 import 'package:flutter_firebase/ui/components/custom_dialog.dart';
@@ -16,6 +17,7 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  final _auth = FirebaseAuth.instance;
   TextEditingController? _emailController,
       _passwordController,
       _confirmPasswordController;
@@ -118,18 +120,28 @@ class _SignupScreenState extends State<SignupScreen> {
         child: CustomButton(
           color: blue,
           width: MediaQuery.of(context).size.width,
-          onTap: () {
-            showDialog(
-              context: context,
-              builder: (context) => CustomPopUp(
-                onButtonTap: () {
-                  Navigator.pushReplacementNamed(context, 'home');
-                },
-                title: "Sign Up Successful!",
-                text: "Your account has been created",
-                buttonText: "Goto Home",
-              ),
-            );
+          onTap: () async {
+            try {
+              final newUser = await _auth.createUserWithEmailAndPassword(
+                  email: _emailController!.text.toString(),
+                  password: _passwordController!.text.toString());
+              if (newUser != null) {
+                // Navigator.pushNamed(context, 'home_screen');
+                showDialog(
+                  context: context,
+                  builder: (context) => CustomPopUp(
+                    onButtonTap: () {
+                      Navigator.pushReplacementNamed(context, 'home');
+                    },
+                    title: "Sign Up Successful!",
+                    text: "Your account has been created",
+                    buttonText: "Goto Home",
+                  ),
+                );
+              }
+            } catch (e) {
+              debugPrint(e.toString());
+            }
           },
           child: const Text(
             "Sign Up",

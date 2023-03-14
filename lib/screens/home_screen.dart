@@ -54,6 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
             uid: userUID!,
             title: titleController.text.toString(),
             url: value,
+            dateTime: DateTime.now().toString()
           ),
         );
    Navigator.popAndPushNamed(context, "home_screen");

@@ -10,7 +10,8 @@ import 'package:flutter_firebase/ui/screens/signup.dart';
 import 'package:flutter_firebase/ui/screens/login.dart';
 import 'package:flutter_firebase/ui/screens/on_board.dart';
 import 'package:flutter_firebase/ui/screens/splash.dart';
-// import 'firebase_options.dart';
+import 'package:flutter_firebase/ui/screens/upload_image.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,6 +49,7 @@ final routes = {
   'login': (context) => const LoginScreen(),
   'signup': (context) => const SignupScreen(),
   'home': (context) => const Dashboard(),
+  'upload': (context) => const UploadImage(),
 
   // OLD UI
   'welcome_screen': (context) => const WelcomePage(title: 'Welcome'),
