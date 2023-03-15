@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DatabaseService {
   Future<String?> addData(
@@ -25,7 +26,13 @@ class DatabaseService {
     }
   }
 
-  Future<dynamic> getUser(String? uid) async {
+  // Future<dynamic> getUser(String? uid) async {
+  Future<dynamic> getUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    const key = 'uid';
+    final uid = prefs.getString(key) ?? "";
+    // final valueEmail = prefs.getString("email") ?? "";
+    debugPrint('read: $uid');
     List<dynamic> listMap = [];
     try {
       CollectionReference users =

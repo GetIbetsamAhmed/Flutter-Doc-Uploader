@@ -166,6 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
     const key = 'uid';
     final value = newUser.user!.uid;
     prefs.setString(key, value);
+    prefs.setString("email", newUser.user!.email!);
     debugPrint('saved $value');
   }
 }

@@ -82,7 +82,8 @@ class _ShowDataScreenState extends State<ShowDataScreen> {
                 child: CircularProgressIndicator(),
               );
             },
-            future: DatabaseService().getUser(userUID!)),
+            // future: DatabaseService().getUser(userUID!)),
+            future: DatabaseService().getUser()),
       ),
     );
   }

@@ -8,6 +8,7 @@ import 'package:flutter_firebase/ui/components/remember_me.dart';
 import 'package:flutter_firebase/ui/responsiveness/screen_size.dart';
 import 'package:flutter_firebase/ui/shared/colors.dart';
 import 'package:flutter_firebase/ui/shared/global_padding.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -127,6 +128,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   password: _passwordController!.text.toString());
               if (newUser != null) {
                 // Navigator.pushNamed(context, 'home_screen');
+                _save(newUser);
                 showDialog(
                   context: context,
                   builder: (context) => CustomPopUp(
@@ -153,5 +155,13 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
     );
+  }
+  _save(UserCredential newUser) async {
+    final prefs = await SharedPreferences.getInstance();
+    const key = 'uid';
+    final value = newUser.user!.uid;
+    prefs.setString(key, value);
+    prefs.setString("email", newUser.user!.email!);
+    debugPrint('saved $value');
   }
 }

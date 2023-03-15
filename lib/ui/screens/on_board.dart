@@ -22,16 +22,19 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       "title": "Scan all your documents quickly and easily",
       "data":
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took",
+      "image": "assets/images/onboard1.jpg"
     },
     {
       "title": "You can also edit and costumize your scan results",
       "data":
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+      "image": "assets/images/onboard2.jpg"
     },
     {
       "title": "Optimize your documents now",
       "data":
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+      "image": "assets/images/onboard3.jpg"
     },
   ];
 
@@ -68,7 +71,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Spacer(flex: 10),
+            const Spacer(flex: 5),
+            Image.asset(data["image"]!),
             Text(
               data['title']!,
               style: TextStyle(
@@ -113,9 +117,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 CustomButton(
                   color: lightGrey,
                   onTap: () async {
-                    // await _userOnboarded();
+                    await _userOnboarded();
                     Navigator.pushNamed(context, "signup");
-                    
                   },
                   width: MediaQuery.of(context).size.width * 0.4,
                   child: Text(
@@ -136,7 +139,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         curve: Curves.easeInOutCubicEmphasized,
                       );
                     } else {
-                      // await _userOnboarded();
+                      await _userOnboarded();
                       Navigator.pushNamed(context, "login");
                     }
                   },
