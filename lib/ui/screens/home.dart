@@ -14,13 +14,17 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+<<<<<<< Updated upstream
   String? userUID;
   String? userEmail;
   final _auth = FirebaseAuth.instance;
+=======
+  // String? userUID;
+>>>>>>> Stashed changes
   @override
   void initState() {
+    // _read();
     super.initState();
-    _read();
   }
 
   @override
@@ -28,6 +32,7 @@ class _DashboardState extends State<Dashboard> {
     super.dispose();
   }
 
+<<<<<<< Updated upstream
   _read() async {
     final prefs = await SharedPreferences.getInstance();
     const key = 'uid';
@@ -40,6 +45,19 @@ class _DashboardState extends State<Dashboard> {
       userEmail = valueEmail.toString();
     });
   }
+=======
+  // _read() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   const key = 'uid';
+  //   final value = prefs.getString(key);
+  //   debugPrint('read: $value');
+    
+
+  //   setState(() {
+  //     userUID = value.toString();
+  //   });
+  // }
+>>>>>>> Stashed changes
 
   @override
   Widget build(BuildContext context) {

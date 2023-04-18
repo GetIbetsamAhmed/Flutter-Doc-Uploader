@@ -14,7 +14,7 @@ class _ShowDataScreenState extends State<ShowDataScreen> {
   @override
   void initState() {
     super.initState();
-    _read();
+    // _read();
   }
 
   @override
@@ -88,14 +88,14 @@ class _ShowDataScreenState extends State<ShowDataScreen> {
     );
   }
 
-  _read() async {
-    final prefs = await SharedPreferences.getInstance();
-    const key = 'uid';
-    final value = prefs.getString(key) ?? "";
-    debugPrint('read: $value');
+  // _read() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   const key = 'uid';
+  //   final value = prefs.getString(key) ?? "";
+  //   debugPrint('read: $value');
 
-    setState(() {
-      userUID = value.toString();
-    });
-  }
+  //   setState(() {
+  //     userUID = value.toString();
+  //   });
+  // }
 }

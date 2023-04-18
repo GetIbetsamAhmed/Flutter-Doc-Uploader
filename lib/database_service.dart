@@ -9,16 +9,10 @@ class DatabaseService {
       required String? url,
       required String? dateTime}) async {
     try {
-      CollectionReference data =
-          FirebaseFirestore.instance.collection('data');
+      CollectionReference data = FirebaseFirestore.instance.collection('data');
       // Call the user's CollectionReference to add a new user
       await data.add(
-        {
-          'uid': uid,
-          'title': title,
-          'url': url,
-          'dateTime': dateTime
-        },
+        {'uid': uid, 'title': title, 'url': url, 'dateTime': dateTime},
       );
       return 'success';
     } catch (e) {
@@ -30,19 +24,22 @@ class DatabaseService {
   Future<dynamic> getUser() async {
     final prefs = await SharedPreferences.getInstance();
     const key = 'uid';
-    final uid = prefs.getString(key) ?? "";
+// <<<<<<< Updated upstream
+    // final uid = prefs.getString(key) ?? "";
     // final valueEmail = prefs.getString("email") ?? "";
+// =======
+    final uid = prefs.getString(key);
+// >>>>>>> Stashed changes
     debugPrint('read: $uid');
     List<dynamic> listMap = [];
     try {
-      CollectionReference users =
-          FirebaseFirestore.instance.collection('data');
+      CollectionReference users = FirebaseFirestore.instance.collection('data');
       // final snapshot =
       await users.where("uid", isEqualTo: uid).get().then(
         (querySnapshot) {
           debugPrint("Successfully completed");
           for (var docSnapshot in querySnapshot.docs) {
-            debugPrint('${docSnapshot.id} => ${docSnapshot.data()}');
+            debugPrint('${docSnapshot.id} => ${docSnapshot.data()}');           
             listMap.add(docSnapshot.data());
           }
         },

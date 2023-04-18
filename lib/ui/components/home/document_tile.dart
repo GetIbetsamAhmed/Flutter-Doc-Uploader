@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/ui/components/custom_dialog.dart';
 import 'package:flutter_firebase/ui/responsiveness/screen_size.dart';
@@ -154,7 +155,7 @@ class _DocumentTileState extends State<DocumentTile> {
                           );
                         } else {
                           if (SnackBarsState.isSnackBarOpen) {
-                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            if(mounted)ScaffoldMessenger.of(context).hideCurrentSnackBar();
                             SnackBarsState.isSnackBarOpen =
                                 !SnackBarsState.isSnackBarOpen;
                           }
@@ -163,11 +164,7 @@ class _DocumentTileState extends State<DocumentTile> {
                       },
                       elevation: 0,
                       padding: const EdgeInsets.only(
-                        top: 12.0,
-                        left: 0,
-                        right: 00,
-                        bottom: 12,
-                      ),
+                          top: 12.0, left: 0, right: 00, bottom: 12),
                       iconSize: screenHeight(context, 30),
                       itemBuilder: (context) => [
                         PopupMenuItem(
@@ -219,6 +216,10 @@ class _DocumentTileState extends State<DocumentTile> {
   }
 
   _renameWidget() {
+    Future.delayed(const Duration(seconds: 2), () {
+      if(kDebugMode)  print("Snackbar closed");
+      SnackBarsState.isSnackBarOpen = true;
+    });
     SnackBarsState.isSnackBarOpen = true;
     return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -227,7 +228,7 @@ class _DocumentTileState extends State<DocumentTile> {
           controller: _renameController!,
           autofocus: true,
           onSubmitted: (val) {
-            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            if(mounted) ScaffoldMessenger.of(context).hideCurrentSnackBar();
             SnackBarsState.isSnackBarOpen = !SnackBarsState.isSnackBarOpen;
             debugPrint('Submitted text: ${_renameController!.text}');
             _renameController!.clear();
@@ -247,15 +248,16 @@ class _DocumentTileState extends State<DocumentTile> {
             hintText: 'Enter title',
           ),
         ),
-        duration: const Duration(days: 1),
+        duration: const Duration(seconds: 1000),
         action: SnackBarAction(
           textColor: blue,
           label: 'Submit',
           onPressed: () {
             // Handle submit action here
-            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            
             SnackBarsState.isSnackBarOpen = !SnackBarsState.isSnackBarOpen;
             debugPrint('Submitted text: ${_renameController!.text}');
+            if(mounted) ScaffoldMessenger.of(context).hideCurrentSnackBar();
             _renameController!.clear();
           },
         ),
