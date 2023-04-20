@@ -78,7 +78,12 @@ drawer({required double width, required DocumentProvider provider,required Build
             padding: globalHorizontalPadding(context),
             child: InkWell(
               onTap: () {
+                // Closing the drawer
                 provider.setDrawerTappedCheck(false);
+                if(provider.isSearchTapped){
+                  provider.animateSearchToLeft();
+                }
+                // Navigating to Upload Document Screen
                 provider.setFloatingTappedCheck(true);
               },
               child: Row(

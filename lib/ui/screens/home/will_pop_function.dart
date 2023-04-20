@@ -18,9 +18,13 @@ Future<bool> onWillPop(
   } else if (docProvider.showRenameWidget) {
     docProvider.hideRenameContainer();
   } else if (docProvider.isSearchTapped) {
-    docProvider.setSearchTapped(false);
-    searchController.clear();
-    docProvider.clearSearchList();
+    if (docProvider.getAnimateSearchToLeft) {
+      docProvider.animateSearchToRight();
+    } else {
+      docProvider.setSearchTapped(false);
+      searchController.clear();
+      docProvider.clearSearchList();
+    }
   } else {
     await showDialog(
       context: context,

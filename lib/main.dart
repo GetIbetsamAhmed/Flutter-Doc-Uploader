@@ -1,22 +1,28 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_firebase/screens/home_screen.dart';
-import 'package:flutter_firebase/screens/show_data_screen.dart';
-import 'package:flutter_firebase/screens/sign_in.dart';
-import 'package:flutter_firebase/screens/sign_up.dart';
-import 'package:flutter_firebase/ui/screens/home.dart';
+// import 'package:flutter_firebase/screens/home_screen.dart';
+// import 'package:flutter_firebase/screens/show_data_screen.dart';
+// import 'package:flutter_firebase/screens/sign_in.dart';
+// import 'package:flutter_firebase/screens/sign_up.dart';
+import 'package:flutter_firebase/ui/screens/home/home.dart';
 import 'package:flutter_firebase/ui/screens/signup.dart';
-import 'package:flutter_firebase/ui/screens/login.dart';
+import 'package:flutter_firebase/ui/screens/signin.dart';
 import 'package:flutter_firebase/ui/screens/on_board.dart';
 import 'package:flutter_firebase/ui/screens/splash.dart';
 import 'package:flutter_firebase/ui/screens/upload_image.dart';
-import 'firebase_options.dart';
+import 'package:flutter_firebase/ui/state_management/provder_util.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => DocumentProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -42,7 +48,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-final routes = {
+Map<String, WidgetBuilder> routes = {
   // NEW UI
   'splash': (context) => const SplashScreen(),
   'onboarding_screen': (context) => const OnBoardingScreen(),
@@ -51,12 +57,12 @@ final routes = {
   'home': (context) => const Dashboard(),
   'upload': (context) => const UploadImage(),
 
-  // OLD UI
-  'welcome_screen': (context) => const WelcomePage(title: 'Welcome'),
-  'home_screen': (context) => const HomeScreen(),
-  'sign_up': (context) => const SignUpScreen(),
-  'sign_in': (context) => const SignInScreen(),
-  'show_data_screen': (context) => const ShowDataScreen(),
+  // // OLD UI
+  // 'welcome_screen': (context) => const WelcomePage(title: 'Welcome'),
+  // 'home_screen': (context) => const HomeScreen(),
+  // 'sign_up': (context) => const SignUpScreen(),
+  // 'sign_in': (context) => const SignInScreen(),
+  // 'show_data_screen': (context) => const ShowDataScreen(),
 };
 
 class WelcomePage extends StatefulWidget {

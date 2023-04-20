@@ -18,7 +18,7 @@ class PasswordField extends StatefulWidget {
 }
 
 class _PasswordFieldState extends State<PasswordField> {
-  bool showPassword = false;
+  bool hidePassword = true;
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -27,10 +27,10 @@ class _PasswordFieldState extends State<PasswordField> {
       cursorColor: blue,
       decoration: _passwordDecorator(blue, context, () {
         setState(() {
-          showPassword = !showPassword;
+          hidePassword = !hidePassword;
         });
-      }, showPassword),
-      obscureText: showPassword,
+      }, hidePassword),
+      obscureText: hidePassword,
       onChanged: widget.onChanged,
     );
   }
@@ -53,7 +53,7 @@ class _PasswordFieldState extends State<PasswordField> {
       suffixIcon: InkWell(
         onTap: onTap,
         child: Icon(
-          showPassword ? Icons.visibility_off : Icons.visibility,
+          !showPassword ? Icons.visibility_off : Icons.visibility,
           color: blue,
         ),
       ),

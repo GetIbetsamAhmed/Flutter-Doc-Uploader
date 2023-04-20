@@ -6,6 +6,7 @@ class CustomButton extends StatelessWidget {
   final double? height, width, borderRadius;
   final Color color;
   final Widget child;
+  final Border? buttonBorder;
   const CustomButton({
     super.key,
     this.height,
@@ -14,6 +15,7 @@ class CustomButton extends StatelessWidget {
     required this.child,
     required this.color,
     required this.onTap,
+    this.buttonBorder, 
   });
 
   @override
@@ -26,6 +28,7 @@ class CustomButton extends StatelessWidget {
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(borderRadius!),
+            border: buttonBorder,
           ),
           child: Center(child: child)),
     );

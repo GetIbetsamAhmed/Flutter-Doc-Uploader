@@ -87,6 +87,18 @@ class DocumentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _shouldAnimatedSearchToLeft = false;
+  void animateSearchToLeft() {
+    _shouldAnimatedSearchToLeft = true;
+    notifyListeners();
+  }
+
+  bool get getAnimateSearchToLeft => _shouldAnimatedSearchToLeft;
+  void animateSearchToRight() {
+    _shouldAnimatedSearchToLeft = false;
+    notifyListeners();
+  }
+
   bool get isFloatingTapped => _isfloatingTapped;
   void setFloatingTappedCheck(bool check) {
     hideRenameContainer();
@@ -133,27 +145,27 @@ class DocumentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeDocFromSearch(String docId){
+  void removeDocFromSearch(String docId) {
     int index = 0;
-    for(int i = 0; i < searchList.length; i++){
-      if(docId == searchList[i].docId){
+    for (int i = 0; i < searchList.length; i++) {
+      if (docId == searchList[i].docId) {
         index = i;
         break;
       }
     }
-    searchList.removeAt(index); 
+    searchList.removeAt(index);
     notifyListeners();
   }
 
-  void renameDocTitleInSearch(String docId, String newTitle){
+  void renameDocTitleInSearch(String docId, String newTitle) {
     int index = 0;
-    for(int i = 0; i < searchList.length; i++){
-      if(docId == searchList[i].docId){
+    for (int i = 0; i < searchList.length; i++) {
+      if (docId == searchList[i].docId) {
         index = i;
         break;
       }
     }
-    searchList[index].title = newTitle; 
+    searchList[index].title = newTitle;
     notifyListeners();
   }
 
@@ -162,7 +174,7 @@ class DocumentProvider extends ChangeNotifier {
         .where(
           (e) =>
               e.title.toString().toLowerCase().contains(val.toLowerCase()) ||
-              e.dataTime.toString().toLowerCase().contains(val.toLowerCase()), 
+              e.dataTime.toString().toLowerCase().contains(val.toLowerCase()),
         )
         .toList();
     notifyListeners();

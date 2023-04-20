@@ -1,6 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/database_service.dart';
 import 'package:flutter_firebase/ui/responsiveness/screen_size.dart';
 import 'package:flutter_firebase/ui/shared/colors.dart';
+import 'package:flutter_firebase/ui/state_management/provder_util.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,23 +23,40 @@ class _SplashScreenState extends State<SplashScreen> {
       _navigate();
     });
     super.initState();
-  }
+  } 
 
   _navigate() async {
     final pref = await SharedPreferences.getInstance();
-    if (pref.getBool("on_boarded") == null) {
-      if (pref.getString("uid") == null) {
-        _navigateToOnBoarding();
-      } else if (pref.getString('uid') != null) {
+    final provider = context.read<DocumentProvider>();
+    // if (pref.getBool("on_boarded") == null) {
+    //   if (pref.getString("uid") == null) {
+    //     _navigateToOnBoarding();
+    //   } else if (pref.getString('uid') != null) {
+    //     provider.setUid(pref.getString('uid')!);
+    //     _navigateToHome();
+    //   }
+    // } else if (pref.getBool("on_boarded")!) {
+    //   if (pref.getString("uid") == null) {
+    //     _navigateToLogin();
+    //   } else if (pref.getString('uid') != null) {
+    //     provider.setUserEmail(pref.getString("email") ?? "");
+    //     _navigateToHome();
+    //   }
+    // }
+    if(pref.getString('uid') != null){
+      provider.setUid(pref.getString('uid')!);
+    }
+    if (pref.getBool('on_boarded') == null) {
+      _navigateToOnBoarding();
+    } else if (pref.getBool('on_boarded')!) {
+      if (pref.getString('email') != null) {
+        provider.setUserEmail(pref.getString("email")!);
         _navigateToHome();
-      }
-    } else if (pref.getBool("on_boarded")!) {
-      if (pref.getString("uid") == null) {
+      } else {
         _navigateToLogin();
-      } else if (pref.getString('uid') != null) {
-        _navigateToHome();
       }
     }
+    DatabaseService().getAppDetails(provider);
   }
 
   _navigateToOnBoarding() {
@@ -51,9 +73,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,

@@ -8,6 +8,12 @@ class CustomPopUp extends StatelessWidget {
   final Function onButtonTap;
   final String buttonText, title, text;
   final bool closeDialogOnTap;
+  final Icon? icon;
+  final IconData inscribedIcon;
+  final double bottomSpace, titleSize, textSize;
+  final FontWeight textWeight;
+  final Widget? secondButton;
+  final double firstButtonWidth;
   const CustomPopUp({
     super.key,
     required this.onButtonTap,
@@ -15,6 +21,14 @@ class CustomPopUp extends StatelessWidget {
     required this.text,
     required this.title,
     this.closeDialogOnTap = true,
+    this.icon,
+    this.bottomSpace = 50,
+    this.titleSize = 23,
+    this.textSize = 16,
+    this.textWeight = FontWeight.w500,
+    this.inscribedIcon = Icons.person,
+    this.secondButton,
+    this.firstButtonWidth = 1,
   });
 
   @override
@@ -43,57 +57,85 @@ class CustomPopUp extends StatelessWidget {
               children: [
                 const Spacer(flex: 2),
                 Center(
-                  child: Container(
-                    height: screenHeight(context, 140),
-                    width: screenWidth(context, 140),
-                    decoration: BoxDecoration(
-                      color: blue,
-                      borderRadius: BorderRadius.circular(140),
-                    ),
-                    child: Icon(
-                      Icons.person,
-                      size: screenHeight(context, 90),
-                      color: lightGrey,
-                    ),
-                  ),
+                  child: icon ??
+                      Container(
+                        height: screenHeight(context, 140),
+                        width: screenWidth(context, 140),
+                        decoration: BoxDecoration(
+                          color: blue,
+                          borderRadius: BorderRadius.circular(140),
+                        ),
+                        child: Icon(
+                          inscribedIcon,
+                          size: screenHeight(context, 90),
+                          color: white,
+                        ),
+                      ),
                 ),
-                SizedBox(height: screenHeight(context, 50)),
+                SizedBox(height: screenHeight(context, bottomSpace)),
                 Text(
                   title,
                   style: TextStyle(
-                    fontSize: screenHeight(context, 19),
+                    fontSize: screenHeight(context, titleSize),
                     color: blue,
                     fontWeight: FontWeight.w600,
                   ),
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: screenHeight(context, 10)),
                 Text(
                   text,
                   style: TextStyle(
-                    fontSize: screenHeight(context, 15),
+                    fontSize: screenHeight(context, textSize),
                     color: textGrey,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: textWeight,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 const Spacer(),
-                CustomButton(
-                  color: blue,
-                  width: MediaQuery.of(context).size.width,
-                  height: 60,
-                  onTap: () {
-                    Navigator.pop(context); 
-                    onButtonTap();                    
-                  },
-                  child: Text(
-                    buttonText,
-                    style: TextStyle(
-                      color: lightGrey,
-                      fontSize: screenHeight(context, 16),
-                      fontWeight: FontWeight.w500,
+                if (secondButton == null)
+                  CustomButton(
+                    color: blue,
+                    width: MediaQuery.of(context).size.width / firstButtonWidth,
+                    height: 60,
+                    onTap: () {
+                      Navigator.pop(context);
+                      onButtonTap();
+                    },
+                    child: Text(
+                      buttonText,
+                      style: TextStyle(
+                        color: lightGrey,
+                        fontSize: screenHeight(context, 16),
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
-                ),
+                if (secondButton != null)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomButton(
+                        color: blue,
+                        width: MediaQuery.of(context).size.width /
+                            firstButtonWidth,
+                        height: 60,
+                        onTap: () {
+                          Navigator.pop(context);
+                          onButtonTap();
+                        },
+                        child: Text(
+                          buttonText,
+                          style: TextStyle(
+                            color: lightGrey,
+                            fontSize: screenHeight(context, 16),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      if (secondButton != null) secondButton!,
+                    ],
+                  ),
               ],
             ),
           ),

@@ -60,7 +60,8 @@ class _DashboardState extends State<Dashboard> {
     return SafeArea(
       child: Consumer<DocumentProvider>(
         builder: (context, docProvider, _) => WillPopScope(
-          onWillPop: () async => onWillPop(docProvider, context, searchController!),
+          onWillPop: () async =>
+              onWillPop(docProvider, context, searchController!),
           child: Scaffold(
             body: Consumer<DocumentProvider>(
               builder: (context, docProvider, child) {
@@ -80,8 +81,13 @@ class _DashboardState extends State<Dashboard> {
                       // Search Screen
                       AnimatedPositioned(
                         top: docProvider.isSearchTapped ? 0 : -context.height,
+                        left: docProvider.getAnimateSearchToLeft
+                            ? -context.width
+                            : 0,
                         duration: animationDuration,
-                        child: SearchScreen(searchController: searchController!,),
+                        child: SearchScreen(
+                          searchController: searchController!,
+                        ),
                       ),
                       // main dash board or home screen
                       AnimatedPositioned(
@@ -107,22 +113,7 @@ class _DashboardState extends State<Dashboard> {
                             ? -100
                             : screenHeight(context, 20),
                         duration: animationDuration,
-                        child: InkWell(
-                          onTap: () {
-                            docProvider.setFloatingTappedCheck(
-                              !docProvider.isFloatingTapped,
-                            );
-                          },
-                          child: CircleAvatar(
-                            radius: screenHeight(context, 33),
-                            backgroundColor: blue,
-                            child: Icon(
-                              Icons.add,
-                              color: white,
-                              size: screenHeight(context, 26),
-                            ),
-                          ),
-                        ),
+                        child: _addDocumentButton(docProvider),
                       ),
 
                       // Upload Image Screen
@@ -150,10 +141,13 @@ class _DashboardState extends State<Dashboard> {
                         left: docProvider.isDrawerTapped
                             ? drawerWidth
                             : context.width,
-                        child: Container(
-                          height: context.height,
-                          width: context.width,
-                          color: black.withOpacity(0.4),
+                        child: InkWell(
+                          onTap: () => docProvider.setDrawerTappedCheck(false),
+                          child: Container(
+                            height: context.height,
+                            width: context.width,
+                            color: black.withOpacity(0.4),
+                          ),
                         ),
                       ),
 
@@ -198,6 +192,22 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _addDocumentButton(DocumentProvider docProvider) {
+    return FloatingActionButton(
+      onPressed: () {
+        docProvider.setFloatingTappedCheck(!docProvider.isFloatingTapped);
+      },
+      foregroundColor: black,
+      // radius: screenHeight(context, 33),
+      backgroundColor: blue,
+      child: Icon(
+        Icons.add,
+        color: white,
+        size: screenHeight(context, 26),
       ),
     );
   }
