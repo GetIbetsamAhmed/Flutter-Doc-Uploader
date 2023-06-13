@@ -8,3 +8,4 @@ const Color noImageColor = Color.fromARGB(255, 181, 181, 181);
 const Color dashbardContainerColor = Color.fromARGB(255, 242, 242, 242);
 const Color black = Colors.black;
 const Color white = Colors.white;
+const Color transparent = Colors.transparent;

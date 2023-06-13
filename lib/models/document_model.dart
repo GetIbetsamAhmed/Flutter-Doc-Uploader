@@ -1,5 +1,7 @@
 
-class DocumentModel {
+import 'package:flutter_firebase/models/data_contract.dart';
+
+class DocumentModel implements DataModel{
   String title, dataTime, uId, docId, imageURL;
 
   DocumentModel({

@@ -21,6 +21,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Consumer<DocumentProvider>(
@@ -68,6 +69,8 @@ class _SearchScreenState extends State<SearchScreen> {
                 IconButton(
                   onPressed: () {
                     docProvider.setSearchTapped(false);
+                    widget.searchController.clear();
+                    primaryFocus!.unfocus();
                   },
                   icon: Icon(
                     Icons.close,
@@ -91,7 +94,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         height: screenHeight(context, 175),
                       ),
                       Text(
-                        "Your SnapBase is Empty",
+                         "No Searched Found",
                         style: TextStyle(
                           color: textGrey,
                           fontSize: screenHeight(context, 20),

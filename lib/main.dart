@@ -5,7 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 // import 'package:flutter_firebase/screens/show_data_screen.dart';
 // import 'package:flutter_firebase/screens/sign_in.dart';
 // import 'package:flutter_firebase/screens/sign_up.dart';
-import 'package:flutter_firebase/ui/screens/home/home.dart';
+import 'package:flutter_firebase/ui/screens/home/base.dart';
 import 'package:flutter_firebase/ui/screens/signup.dart';
 import 'package:flutter_firebase/ui/screens/signin.dart';
 import 'package:flutter_firebase/ui/screens/on_board.dart';
